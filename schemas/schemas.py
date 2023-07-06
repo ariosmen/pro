@@ -5,13 +5,13 @@ class ProfecionBase(BaseModel):
 
 class ProfecionCreate(ProfecionBase):
     code_number: int
-    profecion: str
+    tipo_profecion: str
     code_province: int
 
 class Profecion(ProfecionBase):
     id: int
     code_number: int
-    profecion: str
+    tipo_profecion: str
     
     class Config:
         orm_mode = True
@@ -20,7 +20,7 @@ class Profecion(ProfecionBase):
 class ProvinceBase(BaseModel):
     name: str
     code_province: int
-    code_contry: int
+    code_country: int
     
 class ProvinceCreate(ProvinceBase):
     pass

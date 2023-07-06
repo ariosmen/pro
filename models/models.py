@@ -9,7 +9,7 @@ class Country(Base):
     name = Column(String(50), unique=True)
     code_country = Column(Integer, unique=True)
     
-    province = relationship('Province', back_populates='owner_province')
+    provinces = relationship('Province', back_populates='owner_province')
 
 class Province(Base):
     __tablename__ = 'provinces'
@@ -19,15 +19,16 @@ class Province(Base):
     code_province = Column(Integer, unique=True)
     code_country = Column(Integer, ForeignKey('countries.code_country'))
     
-    owner_province = relationship('Country', back_populates='province')
-    prof = relationship('Profecion', back_populates='owner_profes')
+    owner_province = relationship('Country', back_populates='provinces')
     
-class Profecion():
+    profeciones = relationship('Profecion', back_populates='owner_profes')
+
+class Profecion(Base):
     __tablename__ = 'profeciones'
     
     id = Column(Integer, primary_key=True)
-    code_number = Column(Integer)
-    tipo_profecion = Column(String)
-    code_province = Column(Integer, ForeignKey('profeciones.code_province'))
+    code_number = Column(Integer, unique=True)
+    tipo_profecion = Column(String(100))
+    code_province = Column(Integer, ForeignKey('provinces.code_province'))
     
-    owner_profes = relationship('Province', back_populates='prof')
+    owner_profes = relationship('Province', back_populates='profeciones')
