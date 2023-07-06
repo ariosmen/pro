@@ -18,5 +18,5 @@ b = df[
     & (df["NAIX_MUNICIPI"] == "AZUAGA")
 ]
 
-# order(a)
-# order(b)
+order(a)
+order(b)
