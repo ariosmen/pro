@@ -45,20 +45,29 @@ def create_provinces(province: schemas.ProvinceCreate, db: Session = Depends(get
         raise HTTPException(status_code=400, detail='Province already exists')
     return crud.create_province(db, province)
 
-@padron.get('/profeciones/{code_number}', response_model=schemas.Profecion)
-def get_profecion(code_number: int, db: Session = Depends(get_db)):
-    db_profecion = crud.get_profecion(db, code_number)
-    if not db_profecion:
-        raise HTTPException(status_code=400, detail='Profecion not found')
-    return db_profecion
+@padron.get('/profesiones/{code_number}', response_model=schemas.Profesion)
+def get_profesion(code_number: int, db: Session = Depends(get_db)):
+    db_profesion = crud.get_profesion(db, code_number)
+    if not db_profesion:
+        raise HTTPException(status_code=400, detail='Profesion not found')
+    return db_profesion
 
-@padron.get('/profeciones', response_model=list[schemas.Profecion])
-def get_profeciones(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return crud.get_profeciones(db, skip, limit)
+@padron.get('/profesiones', response_model=list[schemas.Profesion])
+def get_profesiones(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    return crud.get_profesiones(db, skip, limit)
 
-@padron.post('/profeciones', response_model=schemas.Profecion)
-def create_profecion(profe: schemas.ProfecionCreate, db: Session = Depends(get_db)):
-    return crud.create_profecion(db, profe)
+@padron.post('/profesiones', response_model=schemas.Profesion)
+def create_profesion(profe: schemas.ProfesionCreate, db: Session = Depends(get_db)):
+    db_profesion = crud.get_profesion(db, profe.code_number)
+    if db_profesion:
+        raise HTTPException(status_code=400, detail='Profesion already exists')
+    return crud.create_profesion(db, profe)
     
         
-    
+@padron.get('/provinces/{code_province}/cantidad_profesiones', response_model=schemas.CantidadProfesiones)
+def cantidad_profesiones(code_province: int, db: Session = Depends(get_db)):
+    return crud.cantidad_profesiones(db, code_province)
+
+@padron.get('/provinces/{code_province}/profesiones', response_model=list[schemas.Profesion])
+def profesiones_for_code_province(code_province: int, db: Session = Depends(get_db)):
+    return crud.profesiones_for_code_province(db, code_province)

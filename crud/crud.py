@@ -29,16 +29,23 @@ def create_province(db: Session, province: schemas.ProvinceCreate):
     db.refresh(new_province)
     return new_province
 
-def get_profecion(db: Session, code_number: int):
-    return db.query(models.Profecion).filter(models.Profecion.code_number == code_number).first()
+def get_profesion(db: Session, code_number: int):
+    return db.query(models.Profesion).filter(models.Profesion.code_number == code_number).first()
 
-def get_profeciones(db: Session, skip: int, limit: int):
-    return db.query(models.Profecion).offset(skip).limit(limit).all()
+def get_profesiones(db: Session, skip: int, limit: int):
+    return db.query(models.Profesion).offset(skip).limit(limit).all()
 
-def create_profecion(db: Session, profe: schemas.ProfecionCreate):
-    new_profecion = models.Profecion(**profe.dict())
-    db.add(new_profecion)
+def create_profesion(db: Session, profe: schemas.ProfesionCreate):
+    new_profesion = models.Profesion(**profe.dict())
+    db.add(new_profesion)
     db.commit()
-    db.refresh(new_profecion)
-    return new_profecion
+    db.refresh(new_profesion)
+    return new_profesion
 
+def cantidad_profesiones(db: Session, code_province: int):
+    name = db.query(models.Province).filter(models.Province.code_province == code_province).first()
+    db_profesiones = db.query(models.Profesion).filter(models.Profesion.code_province == code_province).all()
+    return {"name": name.name, "cantidad": len(db_profesiones)}
+
+def profesiones_for_code_province(db:Session, code_province):
+    return db.query(models.Profesion).filter(models.Profesion.code_province == code_province).all()

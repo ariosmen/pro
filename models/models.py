@@ -21,14 +21,14 @@ class Province(Base):
     
     owner_province = relationship('Country', back_populates='provinces')
     
-    profeciones = relationship('Profecion', back_populates='owner_profes')
+    profesiones = relationship('Profesion', back_populates='owner_profesion')
 
-class Profecion(Base):
-    __tablename__ = 'profeciones'
+class Profesion(Base):
+    __tablename__ = 'profesiones'
     
     id = Column(Integer, primary_key=True)
     code_number = Column(Integer, unique=True)
-    tipo_profecion = Column(String(100))
+    tipo_profesion = Column(String(100))
     code_province = Column(Integer, ForeignKey('provinces.code_province'))
     
-    owner_profes = relationship('Province', back_populates='profeciones')
+    owner_profesion = relationship('Province', back_populates='profesiones')

@@ -1,17 +1,17 @@
 from pydantic import BaseModel
 
-class ProfecionBase(BaseModel):
+class ProfesionBase(BaseModel):
     pass
 
-class ProfecionCreate(ProfecionBase):
+class ProfesionCreate(ProfesionBase):
     code_number: int
-    tipo_profecion: str
+    tipo_profesion: str
     code_province: int
 
-class Profecion(ProfecionBase):
+class Profesion(ProfesionBase):
     id: int
     code_number: int
-    tipo_profecion: str
+    tipo_profesion: str
     
     class Config:
         orm_mode = True
@@ -25,13 +25,13 @@ class ProvinceBase(BaseModel):
 class ProvinceCreate(ProvinceBase):
     pass
 
-class CantidadProfeciones(BaseModel):
+class CantidadProfesiones(BaseModel):
     name: str
     cantidad: int
     
 class Province(ProvinceBase):
     id: int
-    profeciones: list[Profecion] = []
+    profesiones: list[Profesion] = []
     
     class Config:
         orm_mode = True
