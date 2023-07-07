@@ -16,16 +16,16 @@ def order(conjunto):
     country = [{
         "name": name_country[c],
         "code_country": code_country[c]
-    }
+    } 
         for c in range(len(conjunto))
     ]
+    
     
     province = [{
         "name": name_province[p],
         "code_province": code_province[p],
         "code_country": code_country[p]
-    }
-        for p in range(len(conjunto))
+    } for p in range(len(conjunto))
     ]
     
     profesiones = [{
@@ -36,9 +36,16 @@ def order(conjunto):
         for p in range(len(conjunto))
     ]
     
+    lista_country = []
+    lista_province = []
+    
     for c in range(len(country)):
-        response1 = requests.post(URL_COUNTRY, json=country[c])
+        if country[c] not in lista_country:
+            lista_country.append(country[c])
+            requests.post(URL_COUNTRY, json=lista_country[c])
     for p in range(len(province)):
-        response2 = requests.post(URL_PROVINCES, json=province[p])
+        if province[p] not in lista_province:
+            lista_province.append(province[p])
+            requests.post(URL_PROVINCES, json=lista_province[p])
     for p in range(len(profesiones)):
-        response3 = requests.post(URL_PROFESIONES, json=profesiones[p])
+        requests.post(URL_PROFESIONES, json=profesiones[p])

@@ -2,7 +2,7 @@ from search.search import download
 from order.order import order
 import pandas as pd
 
-# download()
+download()
 
 df = pd.read_csv("./download/padron.csv", low_memory=False)
 a = df[
